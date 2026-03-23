@@ -63,7 +63,17 @@ public class Board {
             return board[1][1];
         }
         return ' ';
+
     }
-    // public  isBoardFull()
+    public  boolean isBoardFull(){
+        for(int i=0; i<board.length;i++){
+            for(int j=0; j<board[i].length;j++){
+                if (board[i][j] == ' '){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     // public  isValidMove()
 }
