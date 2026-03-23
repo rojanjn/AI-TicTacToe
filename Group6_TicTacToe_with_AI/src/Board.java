@@ -26,7 +26,7 @@ public class Board {
             }
             System.out.println();
             if(i<(board.length-1)){
-                System.out.print("---------")
+                System.out.println("---------")
             }
         }
     }
@@ -75,5 +75,15 @@ public class Board {
         }
         return true;
     }
-    // public  isValidMove()
+
+    public  boolean isValidMove(int row, int column){
+        if (row >= 0 & row <= 2 && column >= 0 & column <= 2){
+            if(board[row][column] != ' '){
+            return false;
+        }
+            return true;
+        }else
+            return false;
+    }
+
 }
