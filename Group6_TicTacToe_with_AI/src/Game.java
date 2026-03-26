@@ -89,8 +89,8 @@ public class Game {
             Player currentPlayer = getCurrentPlayer(round);
             System.out.println("\n" + currentPlayer.getPlayerName() + " (" + currentPlayer.getPlayerSymbol() + "), What's your move?");
 
-            int row = checkCooridinate("Enter row (1-3): ");
-            int column = checkCooridinate("Enter column (1-3): ");
+            int row = checkCoordinate("Enter row (1-3): ");
+            int column = checkCoordinate("Enter column (1-3): ");
 
             if (!board.isValidMove(row-1, column-1)) {
                 System.out.println("This location has been occupied. Try again.\n");
@@ -140,16 +140,16 @@ public class Game {
         }
     }
 
-    private int checkCooridinate(String output) {
+    private int checkCoordinate(String output) {
         while(true) {
-            int cooridinate;
+            int coordinate;
 
             System.out.println(output);
             if (input.hasNextInt()) {
-                cooridinate = input.nextInt();
+                coordinate = input.nextInt();
 
-                if (cooridinate >= 1 && cooridinate <= 3) {
-                    return cooridinate;
+                if (coordinate >= 1 && coordinate <= 3) {
+                    return coordinate;
                 }
             }else{
                 input.next();
