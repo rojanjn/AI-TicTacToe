@@ -4,15 +4,12 @@
 // Member D: [] ,[1015]
 // Member E: [] ,[1015]
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-
         Game game = new Game();
 
-        System.out.println(Game.menu());
+        System.out.println(menu());
+
         int gameMode = Game.selectGameMode();
 
         if (gameMode == 1) {
@@ -26,5 +23,15 @@ public class Main {
         }else if (gameMode == 3) {
             System.exit(0);
         }
+    }
+
+    public static String menu() {
+
+        return "\n---------TicTacToe--------------\n"
+                + "Game mode\n\n"
+                + "1. 2-Player Game\n"
+                + "2. Play with AI\n"
+                + "3. Exit\n"
+                + "---------------------------------";
     }
 }
