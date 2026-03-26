@@ -7,18 +7,6 @@ public class Game {
     private Player playerA;
     private Player playerB;
 
-    public static String menu() {
-
-        return "\n---------TicTacToe--------------\n"
-                + "Game mode\n\n"
-                + "1. 2-Player Game\n"
-                + "2. Play with AI\n"
-                + "3. Exit\n"
-                + "-----------------------------------";
-    }
-
-
-
     public static int selectGameMode() {
         while (true) {
             int user_input = 0;
@@ -44,21 +32,20 @@ public class Game {
     public void setupPlayers(int gameMode){
         clearScreen();
 
-        String playerAName = "";
-        String playerBName = "";
+        String playerAName;
+        String playerBName;
         char playerASymbol = ' ';
         char playerBSymbol = ' ';
 
         boolean valid = false;
 
         System.out.println("\n---------2-Player Mode--------------");
-
         System.out.print("Player A, Please enter your name: ");
         playerAName = input.next();
 
         while (!valid) {
             System.out.print(playerAName + ", Please enter your Symbol (X will go first): ");
-            playerASymbol = input.next().toUpperCase().charAt(0);;
+            playerASymbol = input.next().toUpperCase().charAt(0);
 
             if (playerASymbol == 'X') {
                 playerBSymbol = 'O';
@@ -88,95 +75,36 @@ public class Game {
 
 
     public void humanPlayerMode() {
-        String firstPlayer;
-        String secondPlayer;
-        char firstSymbol;
-        char secondSymbol;
-
-        int row = 1;
-        int column = 1;
         int round = 1;
-
-        String playerAName = playerA.getPlayerName();
-        String playerBName = playerB.getPlayerName();
-        char playerASymbol = playerA.getPlayerSymbol();
-        char playerBSymbol = playerB.getPlayerSymbol();
 
         clearScreen();
 
         System.out.println("-------------Game Start-------------");
-        System.out.println(playerAName + ": " + playerASymbol + "\n" + playerBName + ": " + playerBSymbol);
-
-        if  (playerASymbol == 'X') {
-            firstPlayer = playerAName;
-            secondPlayer = playerBName;
-            firstSymbol = playerASymbol;
-            secondSymbol = playerBSymbol;
-
-        }else{
-            firstPlayer = playerBName;
-            secondPlayer = playerAName;
-            firstSymbol = playerBSymbol;
-            secondSymbol = playerASymbol;
-        }
+        System.out.println(playerA.getPlayerName() + ": " + playerA.getPlayerSymbol());
+        System.out.println(playerB.getPlayerName() + ": " + playerB.getPlayerSymbol());
 
         board.displayBoard();
 
+        while(true){
+            Player currentPlayer = getCurrentPlayer(round);
+            System.out.println("\n" + currentPlayer.getPlayerName() + " (" + currentPlayer.getPlayerSymbol() + "), What's your move?");
 
-        while(!board.isBoardFull()){
-            char symbol;
-
-            if(round % 2 == 1){
-                System.out.println("\n" + firstPlayer + " (" + firstSymbol + ") , What's your move?");
-                symbol = firstSymbol;
-            }else{
-                System.out.println("\n" + secondPlayer + " (" + secondSymbol + ") , What's your move?");
-                symbol = secondSymbol;
-            }
-
-            while(true) {
-                System.out.print("Enter row (1-3): ");
-                if (input.hasNextInt()) {
-                    row = input.nextInt();
-
-                    if (row >= 1 && row <= 3) break;
-                }else{
-                    input.next();
-                }
-
-                System.out.println("Invalid input. Try again.\n");
-            }
-
-            while(true) {
-                System.out.print("Enter column (1-3): ");
-                if (input.hasNextInt()) {
-                    column = input.nextInt();
-
-                    if (column >= 1 && column <= 3) break;
-                }else{
-                    input.next();
-                }
-                System.out.println("Invalid input. Try again.\n");
-            }
+            int row = checkCooridinate("Enter row (1-3): ");
+            int column = checkCooridinate("Enter column (1-3): ");
 
             if (!board.isValidMove(row-1, column-1)) {
                 System.out.println("This location has been occupied. Try again.\n");
                 continue;
             }
 
-            board.makeMove(row-1, column-1, symbol);
+            board.makeMove(row-1, column-1, currentPlayer.getPlayerSymbol());
             board.displayBoard();
             round++;
+
             char result = board.checkWinner();
-            if (result == 'X') {
+            if (result == 'X' || result == 'O') {
                 System.out.println("\n-------------Game End-------------");
-                System.out.println("The winner goes to " + firstPlayer);
-
-                break;
-
-            }else if (result == 'O') {
-                System.out.println("\n-------------Game End-------------");
-                System.out.println("The winner goes to " + secondPlayer);
+                System.out.println("The winner goes to " + currentPlayer.getPlayerName());
                 break;
 
             }else if (result == ' ' && board.isBoardFull()) {
@@ -203,4 +131,32 @@ public class Game {
         }
     }
 
+    private Player getCurrentPlayer(int round) {
+        boolean playerAGoesFirst = playerA.getPlayerSymbol() == 'X';
+        if (round % 2 == 1) {
+            return playerAGoesFirst ? playerA : playerB;
+        } else {
+            return playerAGoesFirst ? playerB : playerA;
+        }
+    }
+
+    private int checkCooridinate(String output) {
+        while(true) {
+            int cooridinate;
+
+            System.out.println(output);
+            if (input.hasNextInt()) {
+                cooridinate = input.nextInt();
+
+                if (cooridinate >= 1 && cooridinate <= 3) {
+                    return cooridinate;
+                }
+            }else{
+                input.next();
+            }
+
+            System.out.println("Invalid input. Try again.\n");
+        }
+
+    }
 }
