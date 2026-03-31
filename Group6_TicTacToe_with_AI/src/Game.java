@@ -118,9 +118,64 @@ public class Game {
 
 
     public void aiMode() {
+        int round = 1;
+
         clearScreen();
 
         System.out.println("\n---------Play with AI---------------");
+        System.out.println(playerA.getPlayerName() + ": " + playerA.getPlayerSymbol());
+        System.out.println(playerB.getPlayerName() + "  (AI): " + playerB.getPlayerSymbol());
+
+        board.displayBoard();
+
+        // MinMaxAI instance
+        MinimaxAI ai = new MinimaxAI(board, playerB.getPlayerSymbol(), playerA.getPlayerSymbol());
+
+        while (true) {
+            Player currentPlayer = getCurrentPlayer(round);
+
+            if (currentPlayer == playerA ) {
+                // Human Player's turn
+                System.out.println("\n" + currentPlayer.getPlayerName() + " (" + currentPlayer.getPlayerSymbol() + "), What's your move?");
+                
+                int row = checkCoordinate("Enter row (1-3): ");
+                int column = checkCoordinate("Enter column (1-3): ");
+                
+                if (!board.isValidMove(row-1, column-1)) {
+                    System.out.println("This location has been occupied. Try again.\n");
+                    continue;
+                }    
+                
+                board.makeMove(row-1, column-1, currentPlayer.getPlayerSymbol());
+
+            } else {
+                // AI's turn
+                System.out.println("\n" + currentPlayer.getPlayerName() + " is thinking...");
+
+                int[] bestMove = ai.getBestMove();
+                int row = bestMove[0];
+                int column = bestMove[1];
+
+                board.makeMove(row, column, currentPlayer.getPlayerSymbol());
+                System.out.println(currentPlayer.getPlayerName() + " chose row " + (row+1) + ", column " + (column+1));
+            }
+
+            board.displayBoard();
+            round++;
+
+            char result = board.checkWinner();
+            if (result == 'X' || result == 'O') {
+                System.out.println("\n-------------Game End-------------");
+                System.out.println("The winner goes to " + currentPlayer.getPlayerName());
+
+                break;
+
+            } else if (result == ' ' && board.isBoardFull()) {
+                System.out.println("\n-------------Game End-------------");
+                System.out.println("This game is tie");
+                break;
+            }
+        }
     }
 
 
