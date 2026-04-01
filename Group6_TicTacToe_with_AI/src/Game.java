@@ -1,3 +1,9 @@
+// Member A: [Jui Hsin Wong] ,[101559700]
+// Member B: [Cheng Yeh Tsai] ,[101539796]
+// Member C: [Renan Gutierrez] ,[101573073]
+// Member D: [Rojan Jafarnezhad] ,[101561560]
+// Member E: [Andrea Salswach Lopez] ,[101580260]
+
 import java.util.Scanner;
 
 public class Game {
@@ -39,7 +45,11 @@ public class Game {
 
         boolean valid = false;
 
-        System.out.println("\n---------2-Player Mode--------------");
+        if (gameMode == 1) {
+            System.out.println("\n---------2-Player Mode--------------");
+        } else {
+            System.out.println("\n---------Play with AI---------------");
+        }
         System.out.print("Player A, Please enter your name: ");
         playerAName = input.next();
 
@@ -109,7 +119,8 @@ public class Game {
 
             }else if (result == ' ' && board.isBoardFull()) {
                 System.out.println("\n-------------Game End-------------");
-                System.out.println("This game is tie");
+                System.out.println("This game is a tie");
+                break;
             }
         }
 
@@ -172,7 +183,7 @@ public class Game {
 
             } else if (result == ' ' && board.isBoardFull()) {
                 System.out.println("\n-------------Game End-------------");
-                System.out.println("This game is tie");
+                System.out.println("This game is a tie");
                 break;
             }
         }

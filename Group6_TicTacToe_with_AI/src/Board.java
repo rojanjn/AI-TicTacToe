@@ -1,3 +1,9 @@
+// Member A: [Jui Hsin Wong] ,[101559700]
+// Member B: [Cheng Yeh Tsai] ,[101539796]
+// Member C: [Renan Gutierrez] ,[101573073]
+// Member D: [Rojan Jafarnezhad] ,[101561560]
+// Member E: [Andrea Salswach Lopez] ,[101580260]
+
 public class Board {
 
     public char[][] board;
